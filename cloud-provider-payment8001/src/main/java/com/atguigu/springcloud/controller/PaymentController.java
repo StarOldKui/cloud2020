@@ -18,8 +18,9 @@ import java.util.concurrent.TimeUnit;
  * @auther zzyy
  * @create 2020-02-18 10:43
  */
-@RestController
 @Slf4j
+@RestController
+@RequestMapping(value = "/payment")
 public class PaymentController {
     @Autowired
     private PaymentService paymentService;
@@ -30,10 +31,9 @@ public class PaymentController {
 //    @Resource
 //    private DiscoveryClient discoveryClient;
 
-    @PostMapping(value = "/payment/create")
+    @PostMapping(value = "/create")
     public CommonResult<Integer> create(@RequestBody Payment payment) {
         int result = paymentService.create(payment);
-        log.info("*****插入结果：" + result);
 
         if (result > 0) {
             return new CommonResult<>(200, "插入数据库成功,serverPort: " + serverPort, result);
@@ -42,7 +42,7 @@ public class PaymentController {
         }
     }
 
-    @GetMapping(value = "/payment/get/{id}")
+    @GetMapping(value = "/get/{id}")
     public CommonResult<Payment> getPaymentById(@PathVariable("id") Long id) {
         Payment payment = paymentService.getPaymentById(id);
 
@@ -53,7 +53,7 @@ public class PaymentController {
         }
     }
 
-   /* @GetMapping(value = "/payment/discovery")
+   /* @GetMapping(value = "/discovery")
     public Object discovery() {
         List<String> services = discoveryClient.getServices();
         for (String element : services) {
@@ -68,12 +68,12 @@ public class PaymentController {
         return this.discoveryClient;
     }*/
 
-    @GetMapping(value = "/payment/lb")
+    @GetMapping(value = "/lb")
     public String getPaymentLB() {
         return serverPort;
     }
 
-    @GetMapping(value = "/payment/feign/timeout")
+    @GetMapping(value = "/feign/timeout")
     public String paymentFeignTimeout() {
         // 业务逻辑处理正确，但是需要耗费3秒钟
         try {
@@ -84,7 +84,7 @@ public class PaymentController {
         return serverPort;
     }
 
-    @GetMapping("/payment/zipkin")
+    @GetMapping("/zipkin")
     public String paymentZipkin() {
         return "hi ,i'am paymentzipkin server fall back，welcome to atguigu，O(∩_∩)O哈哈~";
     }

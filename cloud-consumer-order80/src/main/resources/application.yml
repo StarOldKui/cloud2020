@@ -1,5 +1,7 @@
 server:
   port: 80
+# 80端口的原因是默认，所以可以在网址上省略，不用关心端口号
+# 如www.baodi.com:80 -> www.baidu.com
 
 spring:
     application:
