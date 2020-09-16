@@ -20,7 +20,6 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 @RestController
-@RequestMapping(value = "/payment")
 public class PaymentController {
     @Autowired
     private PaymentService paymentService;
@@ -31,7 +30,7 @@ public class PaymentController {
 //    @Resource
 //    private DiscoveryClient discoveryClient;
 
-    @PostMapping(value = "/create")
+    @PostMapping(value = "/payment/create")
     public CommonResult<Integer> create(@RequestBody Payment payment) {
         int result = paymentService.create(payment);
 
@@ -42,7 +41,7 @@ public class PaymentController {
         }
     }
 
-    @GetMapping(value = "/get/{id}")
+    @GetMapping(value = "/payment/get/{id}")
     public CommonResult<Payment> getPaymentById(@PathVariable("id") Long id) {
         Payment payment = paymentService.getPaymentById(id);
 
@@ -53,7 +52,7 @@ public class PaymentController {
         }
     }
 
-   /* @GetMapping(value = "/discovery")
+   /* @GetMapping(value = "/payment/discovery")
     public Object discovery() {
         List<String> services = discoveryClient.getServices();
         for (String element : services) {
@@ -68,12 +67,12 @@ public class PaymentController {
         return this.discoveryClient;
     }*/
 
-    @GetMapping(value = "/lb")
+    @GetMapping(value = "/payment/lb")
     public String getPaymentLB() {
         return serverPort;
     }
 
-    @GetMapping(value = "/feign/timeout")
+    @GetMapping(value = "/payment/feign/timeout")
     public String paymentFeignTimeout() {
         // 业务逻辑处理正确，但是需要耗费3秒钟
         try {
@@ -84,7 +83,7 @@ public class PaymentController {
         return serverPort;
     }
 
-    @GetMapping("/zipkin")
+    @GetMapping("/payment/zipkin")
     public String paymentZipkin() {
         return "hi ,i'am paymentzipkin server fall back，welcome to atguigu，O(∩_∩)O哈哈~";
     }
